@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapReel - Turn Your Coaching Videos Into Viral Clips</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+
+        .nav a:hover {
+            opacity: 0.8;
+        }
+
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 120px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+        }
+
+        .benefits {
+            background: #f8f9fa;
+        }
+
+        .benefits h2 {
+            font-size: 36px;
+            margin-bottom: 60px;
+            text-align: center;
+            color: #333;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .benefit-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .benefit-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .pricing {
+            background: white;
+        }
+
+        .pricing h2 {
+            font-size: 36px;
+            margin-bottom: 60px;
+            text-align: center;
+            color: #333;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .pricing-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+            transform: scale(1.02);
+        }
+
+        .pricing-card h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .price {
+            font-size: 48px;
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .price span {
+            font-size: 18px;
+            color: #999;
+        }
+
+        .pricing-features {
+            text-align: left;
+            margin-bottom: 30px;
+            color: #666;
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .pricing-features li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        .pricing-features li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .faq {
+            background: #f8f9fa;
+        }
+
+        .faq h2 {
+            font-size: 36px;
+            margin-bottom: 60px;
+            text-align: center;
+            color: #333;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .faq-item h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .faq-item p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 10px;
+        }
+
+        .footer-contact {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .nav {
+                gap: 15px;
+                font-size: 12px;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .benefits h2, .pricing h2, .faq h2 {
+                font-size: 28px;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">SnapReel</div>
+            <nav class="nav">
+                <a href="#benefits">Benefits</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#faq">FAQ</a>
+                <a href="mailto:FahadA@snapreel.site">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Your Coaching Content. Posted Daily. Done For You.</h1>
+        <p>We turn your existing coaching videos into 40 viral-ready short clips every month — so you stay visible on TikTok, Reels, and Shorts without spending an extra hour on content.</p>
+        <a href="mailto:FahadA@snapreel.site?subject=Free%20Sample%20Clip" class="cta-button">Get Your Free Sample Clip</a>
+    </section>
+
+    <section class="benefits" id="benefits">
+        <h2>Why SnapReel</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <h3>Never Waste Content Again</h3>
+                <p>Every coaching call, webinar, or podcast becomes daily content that attracts new clients on autopilot. Stop sitting on hours of unused recordings.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>Platform-Ready in 48 Hours</h3>
+                <p>Captions, subtitles, and vertical formatting done for TikTok, Reels, and Shorts. No editing apps, no learning curves — just done.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>$5 Per Clip. Fully Edited.</h3>
+                <p>40 clips a month for $199. Each one captioned, formatted, and ready to post. That's less than a cup of coffee per clip.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <h2>Simple Monthly Plans</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">$99<span>/mo</span></div>
+                <ul class="pricing-features">
+                    <li>20 clips/month</li>
+                    <li>Instagram Reels only</li>
+                    <li>72-hour turnaround</li>
+                    <li>1 revision round</li>
+                </ul>
+                <a href="mailto:FahadA@snapreel.site?subject=Starter%20Plan" class="cta-button">Get Started</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <h3>Growth</h3>
+                <div class="price">$199<span>/mo</span></div>
+                <ul class="pricing-features">
+                    <li>40 clips/month</li>
+                    <li>TikTok + Reels + Shorts</li>
+                    <li>48-hour turnaround</li>
+                    <li>2 revision rounds</li>
+                </ul>
+                <a href="mailto:FahadA@snapreel.site?subject=Growth%20Plan" class="cta-button">Most Popular</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Authority</h3>
+                <div class="price">$349<span>/mo</span></div>
+                <ul class="pricing-features">
+                    <li>80 clips/month</li>
+                    <li>All platforms + LinkedIn</li>
+                    <li>24-hour turnaround</li>
+                    <li>Performance report</li>
+                </ul>
+                <a href="mailto:FahadA@snapreel.site?subject=Authority%20Plan" class="cta-button">Go Big</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq" id="faq">
+        <h2>Questions Answered</h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h3>Do I have to record anything new?</h3>
+                <p>No. You send us your existing coaching calls, YouTube videos, or webinar recordings. We clip, caption, and format everything. Zero extra work on your end.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How do you know which moments to clip?</h3>
+                <p>We use AI to identify your strongest hooks, most actionable advice, and highest-energy moments. Every clip is reviewed by a human before delivery.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What if I don't like the clips?</h3>
+                <p>Your first batch includes unlimited revisions. After that, two revision rounds per delivery. Most clients approve 90%+ on the first pass.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-contact">
+                <p><strong>SnapReel</strong></p>
+                <p>FahadA@snapreel.site</p>
+            </div>
+            <p>&copy; 2026 SnapReel. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
