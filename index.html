@@ -1,415 +1,1020 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SnapReel - Turn Your Coaching Videos Into Viral Clips</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SnapReel — Viral Clips. Done For You.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08);
+      --purple: #7c3aed;
+      --purple-light: #a78bfa;
+      --purple-glow: rgba(124,58,237,0.3);
+      --pink: #ec4899;
+      --text: #f4f4f5;
+      --muted: #71717a;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #fff;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 0 48px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(9,9,11,0.8); backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 22px; font-weight: 900; letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 0%, var(--purple-light) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; gap: 10px; align-items: center; }
+    .btn-ghost {
+      background: transparent; border: 1px solid var(--border); color: var(--text);
+      padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 500;
+      cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; transition: all .2s;
+    }
+    .btn-ghost:hover { border-color: var(--purple-light); color: var(--purple-light); }
+    .btn-primary {
+      background: var(--purple); border: 1px solid transparent; color: white;
+      padding: 8px 18px; border-radius: 8px; font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all .2s;
+    }
+    .btn-primary:hover { background: #6d28d9; transform: translateY(-1px); box-shadow: 0 6px 24px var(--purple-glow); }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 100px 80px 60px; position: relative; overflow: hidden;
+    }
+    .hero-bg-radial {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 800px 600px at 15% 50%, rgba(124,58,237,.12) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 400px at 85% 15%, rgba(167,139,250,.08) 0%, transparent 60%),
+        radial-gradient(ellipse 400px 300px at 70% 80%, rgba(236,72,153,.06) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+      align-items: center; max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 1;
+    }
+    h1 { font-size: 62px; font-weight: 900; line-height: 1.06; letter-spacing: -2.5px; margin-bottom: 24px; }
+    h1 .gradient-text {
+      background: linear-gradient(135deg, var(--purple-light) 0%, var(--pink) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-desc { font-size: 17px; color: var(--muted); line-height: 1.75; max-width: 480px; margin-bottom: 40px; }
+    .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+    .btn-large { padding: 13px 28px !important; font-size: 15px !important; border-radius: 10px !important; }
+    .hero-stats { display: flex; gap: 40px; margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+    .stat-val { font-size: 30px; font-weight: 800; letter-spacing: -1px; color: white; }
+    .stat-lbl { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
+    /* ─── PHONE MOCKUP ─── */
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+      position: relative; height: 580px;
+    }
+    .iphone-wrap { position: relative; width: 258px; height: 520px; }
+    .iphone {
+      width: 258px; height: 520px;
+      background: linear-gradient(145deg, #2a2a2e 0%, #1a1a1e 100%);
+      border-radius: 48px; border: 1.5px solid rgba(255,255,255,.12); position: relative;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.5), 0 0 0 7px rgba(255,255,255,.03), 0 0 0 8px rgba(0,0,0,.3), 0 48px 96px rgba(0,0,0,.7), 0 0 80px rgba(124,58,237,.12);
+      transform: perspective(900px) rotateY(-10deg) rotateX(3deg);
+      animation: phoneFloat 7s ease-in-out infinite;
+      transform-style: preserve-3d;
+    }
+    @keyframes phoneFloat {
+      0%,100% { transform: perspective(900px) rotateY(-10deg) rotateX(3deg) translateY(0); }
+      50%      { transform: perspective(900px) rotateY(-10deg) rotateX(3deg) translateY(-18px); }
+    }
+    .phone-island {
+      position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+      width: 94px; height: 28px; background: #000; border-radius: 20px; z-index: 10;
+    }
+    .phone-power { position: absolute; right: -4px; top: 108px; width: 4px; height: 52px; background: #3a3a3e; border-radius: 0 3px 3px 0; }
+    .phone-vol-up { position: absolute; left: -4px; top: 90px; width: 4px; height: 32px; background: #3a3a3e; border-radius: 3px 0 0 3px; }
+    .phone-vol-dn { position: absolute; left: -4px; top: 134px; width: 4px; height: 32px; background: #3a3a3e; border-radius: 3px 0 0 3px; }
+    .phone-screen { position: absolute; inset: 10px; border-radius: 40px; overflow: hidden; background: #000; }
 
-        .nav {
-            display: flex;
-            gap: 30px;
-        }
+    /* ── Realistic TikTok-style video ── */
 
-        .nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            transition: opacity 0.3s;
-        }
+    /*
+     * TO REPLACE WITH A REAL YOUTUBE SHORT:
+     * Delete the .phone-video div and replace .phone-screen content with:
+     * <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&mute=1&loop=1&controls=0&playlist=YOUR_VIDEO_ID&rel=0"
+     *   style="position:absolute;inset:0;width:100%;height:100%;border:none;" allowfullscreen></iframe>
+     */
+    .phone-video {
+      width: 100%; height: 100%; position: relative; overflow: hidden;
+      background: #0a0a12;
+    }
 
-        .nav a:hover {
-            opacity: 0.8;
-        }
+    /* Animated room/background layer */
+    .vid-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(175deg, #1a1025 0%, #0d1520 50%, #0a0d18 100%);
+    }
+    .vid-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 180px 200px at 50% 30%, rgba(210,170,130,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 220px 300px at 50% 55%, rgba(180,140,110,.10) 0%, transparent 70%);
+      animation: vidShift 6s ease-in-out infinite;
+    }
+    @keyframes vidShift {
+      0%,100% { opacity: 1; transform: translateY(0); }
+      50% { opacity: 0.85; transform: translateY(-4px); }
+    }
 
-        section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    /* Face */
+    .vid-face {
+      position: absolute;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #d4a57a 0%, #b87c4a 55%, #8a5a30 100%);
+      top: 62px; left: 50%; transform: translateX(-50%);
+      box-shadow: 0 4px 20px rgba(0,0,0,.5);
+    }
+    /* Eyes */
+    .vid-face::before, .vid-face::after {
+      content: '';
+      position: absolute;
+      width: 8px; height: 9px;
+      background: #2a1500;
+      border-radius: 50%;
+      top: 24px;
+    }
+    .vid-face::before { left: 14px; }
+    .vid-face::after  { right: 14px; }
 
-        .hero {
-            text-align: center;
-            padding: 120px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
+    /* Shoulders / body */
+    .vid-body {
+      position: absolute;
+      width: 110px; height: 150px;
+      border-radius: 55px 55px 20px 20px;
+      background: linear-gradient(180deg, #2d2060 0%, #1a1040 100%);
+      bottom: 130px; left: 50%; transform: translateX(-50%);
+    }
 
-        .hero h1 {
-            font-size: 56px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
+    /* Mic / speaking animation dots */
+    .vid-mic {
+      position: absolute;
+      bottom: 280px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 3px; align-items: flex-end;
+    }
+    .vid-mic span {
+      width: 3px; border-radius: 2px; background: rgba(167,139,250,.6);
+      animation: micBar 1.2s ease-in-out infinite;
+    }
+    .vid-mic span:nth-child(1) { height: 6px; animation-delay: 0s; }
+    .vid-mic span:nth-child(2) { height: 12px; animation-delay: .15s; }
+    .vid-mic span:nth-child(3) { height: 18px; animation-delay: .3s; }
+    .vid-mic span:nth-child(4) { height: 12px; animation-delay: .45s; }
+    .vid-mic span:nth-child(5) { height: 6px; animation-delay: .6s; }
+    @keyframes micBar {
+      0%,100% { transform: scaleY(.4); opacity: .6; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
 
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 40px;
-            opacity: 0.95;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    /* Background bokeh dots */
+    .vid-bokeh {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .bokeh-dot {
+      position: absolute;
+      border-radius: 50%;
+      animation: bokehFloat 8s ease-in-out infinite;
+    }
+    .bokeh-dot:nth-child(1) { width: 40px; height: 40px; background: rgba(124,58,237,.12); top: 10%; left: 5%; animation-delay: 0s; }
+    .bokeh-dot:nth-child(2) { width: 24px; height: 24px; background: rgba(236,72,153,.10); top: 20%; right: 10%; animation-delay: 2s; }
+    .bokeh-dot:nth-child(3) { width: 32px; height: 32px; background: rgba(167,139,250,.08); bottom: 30%; left: 8%; animation-delay: 4s; }
+    @keyframes bokehFloat {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
 
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 16px 40px;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 16px;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-        }
+    /* ── TikTok UI chrome ── */
+    /* Top bar */
+    .tt-topbar {
+      position: absolute; top: 50px; left: 0; right: 0;
+      display: flex; justify-content: center; align-items: center;
+      gap: 16px; z-index: 8; padding: 0 14px;
+    }
+    .tt-tab {
+      font-size: 12px; font-weight: 500; color: rgba(255,255,255,.55);
+      padding-bottom: 3px;
+    }
+    .tt-tab.active {
+      color: white; font-weight: 700;
+      border-bottom: 2px solid white;
+    }
+    .tt-search-icon {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 16px; color: rgba(255,255,255,.8);
+    }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(0,0,0,0.2);
-        }
+    /* Right sidebar actions */
+    .tt-actions {
+      position: absolute; right: 8px; bottom: 130px;
+      display: flex; flex-direction: column; gap: 18px; align-items: center; z-index: 8;
+    }
+    .tt-action { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+    .tt-action-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .tt-action-btn.heart { font-size: 22px; }
+    .tt-action-count { font-size: 9px; font-weight: 600; color: rgba(255,255,255,.85); }
 
-        .benefits {
-            background: #f8f9fa;
-        }
+    /* Profile avatar with follow */
+    .tt-avatar-wrap {
+      position: absolute; right: 10px; top: 120px; z-index: 8;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .tt-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 2px solid white;
+      background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+    }
+    .tt-follow-btn {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #fe2c55; border: none;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: white; font-weight: 700;
+      margin-top: -9px; cursor: default;
+    }
 
-        .benefits h2 {
-            font-size: 36px;
-            margin-bottom: 60px;
-            text-align: center;
-            color: #333;
-        }
+    /* Bottom left info */
+    .tt-info {
+      position: absolute; bottom: 70px; left: 10px; right: 52px; z-index: 8;
+    }
+    .tt-username {
+      font-size: 12px; font-weight: 800; color: white;
+      display: flex; align-items: center; gap: 4px; margin-bottom: 4px;
+    }
+    .tt-verified {
+      width: 14px; height: 14px; background: #20d5ec;
+      border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+      font-size: 8px; color: white; font-weight: 900; flex-shrink: 0;
+    }
+    .tt-desc {
+      font-size: 9.5px; color: rgba(255,255,255,.8); line-height: 1.5;
+      margin-bottom: 6px;
+    }
+    .tt-music-row {
+      display: flex; align-items: center; gap: 5px;
+    }
+    .tt-music-disc {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: linear-gradient(135deg, #333 40%, var(--purple) 100%);
+      border: 2px solid #555;
+      display: flex; align-items: center; justify-content: center;
+      animation: spin 4s linear infinite; flex-shrink: 0;
+      font-size: 8px;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .tt-music-text { font-size: 9px; color: rgba(255,255,255,.7); white-space: nowrap; overflow: hidden; }
 
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
+    /* Caption */
+    .tt-caption {
+      position: absolute; bottom: 130px; left: 10px; right: 10px; z-index: 9;
+      background: rgba(0,0,0,.65);
+      border-radius: 8px; padding: 8px 10px; text-align: center;
+    }
+    .tt-caption-text {
+      font-size: 14px; font-weight: 800; color: white; line-height: 1.35;
+    }
+    .tt-caption-text .hl { color: #ffd60a; }
 
-        .benefit-card {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            transition: all 0.3s;
-        }
+    /* Progress */
+    .tt-progress {
+      position: absolute; bottom: 44px; left: 0; right: 0; height: 2px;
+      background: rgba(255,255,255,.2); z-index: 8;
+    }
+    .tt-progress-fill {
+      height: 100%; background: rgba(255,255,255,.9); border-radius: 1px;
+      animation: progressAnim 8s linear infinite;
+    }
+    @keyframes progressAnim { from { width: 0%; } to { width: 100%; } }
 
-        .benefit-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-        }
+    /* Bottom nav bar */
+    .tt-bottom-nav {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 44px;
+      background: rgba(0,0,0,.85); backdrop-filter: blur(8px);
+      display: flex; justify-content: space-around; align-items: center; z-index: 8;
+      border-top: .5px solid rgba(255,255,255,.1);
+    }
+    .tt-nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .tt-nav-icon { font-size: 18px; }
+    .tt-nav-label { font-size: 7px; color: rgba(255,255,255,.6); }
+    .tt-nav-item.active .tt-nav-label { color: white; }
+    .tt-plus {
+      width: 36px; height: 22px; border-radius: 6px;
+      background: linear-gradient(90deg, #69c9d0 0%, white 45%, #ee1d52 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 900; color: #333;
+    }
 
-        .benefit-card h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
+    /* ── Floating cards ── */
+    .float-card {
+      position: absolute; background: rgba(20,20,28,.88);
+      border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(20px);
+      border-radius: 14px; padding: 14px 18px;
+      display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.4); white-space: nowrap;
+    }
+    .float-card.fc-1 { top: 8%; left: -30%; animation: fc1 5s ease-in-out infinite; }
+    .float-card.fc-2 { bottom: 14%; right: -28%; animation: fc2 6s ease-in-out infinite; }
+    .float-card.fc-3 { top: 52%; left: -36%; animation: fc1 4.5s ease-in-out infinite reverse; }
+    @keyframes fc1 { 0%,100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-10px) rotate(-1.5deg); } }
+    @keyframes fc2 { 0%,100% { transform: translateY(0) rotate(1.5deg); } 50% { transform: translateY(-12px) rotate(1.5deg); } }
+    .fc-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+    .fc-icon.purple { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+    .fc-icon.green  { background: linear-gradient(135deg, #059669, #065f46); }
+    .fc-icon.orange { background: linear-gradient(135deg, #d97706, #92400e); }
+    .fc-title { font-size: 12px; font-weight: 700; color: white; }
+    .fc-sub { font-size: 10px; color: var(--muted); }
 
-        .benefit-card p {
-            color: #666;
-            line-height: 1.8;
-        }
+    /* ─── LOGOS BAR ─── */
+    .logos-bar { padding: 48px 80px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .logos-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .logos-label { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 32px; }
+    .logos-row { display: flex; align-items: center; justify-content: center; gap: 52px; flex-wrap: wrap; }
+    .logo-item { font-size: 16px; font-weight: 800; color: rgba(255,255,255,.22); letter-spacing: -.5px; }
 
-        .pricing {
-            background: white;
-        }
+    /* ─── SECTIONS ─── */
+    .section { padding: 96px 80px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-eyebrow { text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--purple-light); margin-bottom: 14px; }
+    .section-heading { text-align: center; font-size: 46px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 18px; }
+    .section-subheading { text-align: center; font-size: 17px; color: var(--muted); max-width: 520px; margin: 0 auto 64px; line-height: 1.7; }
 
-        .pricing h2 {
-            font-size: 36px;
-            margin-bottom: 60px;
-            text-align: center;
-            color: #333;
-        }
+    /* ─── HOW IT WORKS ─── */
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border-radius: 20px; overflow: hidden; }
+    .step { background: var(--bg); padding: 48px 36px; position: relative; transition: background .3s; }
+    .step:hover { background: rgba(124,58,237,.05); }
+    .step-num { font-size: 80px; font-weight: 900; color: rgba(255,255,255,.035); position: absolute; top: 16px; right: 24px; line-height: 1; pointer-events: none; }
+    .step-icon-wrap { width: 52px; height: 52px; background: linear-gradient(135deg, rgba(124,58,237,.2), rgba(167,139,250,.08)); border: 1px solid rgba(124,58,237,.25); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 24px; }
+    .step-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+    .step-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
+    /* ─── FEATURES ─── */
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .feat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 18px; padding: 30px; position: relative; overflow: hidden;
+      transition: all .3s ease; cursor: default;
+    }
+    .feat-card::after { content: ''; position: absolute; inset: 0; border-radius: 18px; background: linear-gradient(135deg, rgba(124,58,237,.06) 0%, transparent 60%); opacity: 0; transition: opacity .3s; }
+    .feat-card:hover { border-color: rgba(124,58,237,.3); transform: translateY(-4px) perspective(600px) rotateX(1.5deg); box-shadow: 0 20px 56px rgba(124,58,237,.12); }
+    .feat-card:hover::after { opacity: 1; }
+    .feat-icon { font-size: 28px; margin-bottom: 18px; }
+    .feat-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .feat-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-        .pricing-card {
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.3s;
-        }
+    /* ─── SCROLL ANIMATION (Dashboard section) ─── */
+    .scroll-anim-section { padding: 96px 80px; overflow: hidden; }
+    .scroll-container-wrapper {
+      perspective: 1200px;
+      perspective-origin: 50% 0%;
+    }
+    .scroll-3d-container {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transform: rotateX(28deg) scale(0.88);
+      transform-origin: center top;
+      transition: transform .1s linear;
+      box-shadow: 0 60px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04);
+    }
 
-        .pricing-card.featured {
-            border-color: #667eea;
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
-            transform: scale(1.02);
-        }
+    /* Dashboard mockup inside scroll container */
+    .db-mockup {
+      background: #0f0f14;
+      border-radius: 20px;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+    .db-header {
+      background: #141418;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .db-logo-text {
+      font-size: 18px; font-weight: 900; letter-spacing: -.5px;
+      background: linear-gradient(135deg, #fff 0%, var(--purple-light) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .db-header-right { display: flex; align-items: center; gap: 16px; }
+    .db-stat-pill {
+      background: rgba(124,58,237,.15); border: 1px solid rgba(124,58,237,.25);
+      color: var(--purple-light); border-radius: 100px;
+      padding: 5px 14px; font-size: 12px; font-weight: 600;
+    }
+    .db-btn {
+      background: var(--purple); color: white; border: none;
+      border-radius: 8px; padding: 7px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    .db-video-row {
+      padding: 20px 28px 12px;
+      display: flex; align-items: center; gap: 16px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .db-source-thumb {
+      width: 72px; height: 46px; border-radius: 8px;
+      background: linear-gradient(135deg, #1e1435, #0d1a2e);
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 20px;
+    }
+    .db-source-info { flex: 1; }
+    .db-source-name { font-size: 13px; font-weight: 600; color: white; margin-bottom: 3px; }
+    .db-source-meta { font-size: 11px; color: var(--muted); }
+    .db-source-bar {
+      width: 120px; height: 4px; background: rgba(255,255,255,.08); border-radius: 2px; overflow: hidden;
+    }
+    .db-source-bar-fill { height: 100%; background: var(--purple-light); border-radius: 2px; width: 100%; }
+    .db-clips-label {
+      padding: 16px 28px 12px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .db-clips-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
+      padding: 0 28px 24px;
+    }
+    .db-clip {
+      border-radius: 10px; overflow: hidden; position: relative; cursor: pointer;
+      aspect-ratio: 9/16; background: linear-gradient(175deg, #1a1025 0%, #0d1520 100%);
+      border: 1px solid rgba(255,255,255,.07); transition: transform .2s, border-color .2s;
+    }
+    .db-clip:hover { transform: translateY(-3px); border-color: rgba(124,58,237,.4); }
+    .db-clip-thumb {
+      width: 100%; height: 100%; display: flex; align-items: flex-end;
+      background: linear-gradient(175deg, var(--c1, #1a1025) 0%, var(--c2, #0d1520) 100%);
+      padding: 6px;
+    }
+    .db-clip-score {
+      background: rgba(0,0,0,.7); border-radius: 4px;
+      padding: 2px 6px; font-size: 9px; font-weight: 700;
+      display: flex; align-items: center; gap: 3px; width: 100%;
+    }
+    .db-clip-score .score-num { color: #10b981; }
+    .db-clip-play {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+    }
+    .db-clip-dur {
+      position: absolute; top: 5px; right: 5px;
+      background: rgba(0,0,0,.7); border-radius: 3px;
+      padding: 1px 5px; font-size: 8px; color: rgba(255,255,255,.8); font-weight: 600;
+    }
+    .db-footer {
+      background: #141418; border-top: 1px solid rgba(255,255,255,.06);
+      padding: 12px 28px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .db-footer-stat { font-size: 11px; color: var(--muted); }
+    .db-footer-stat span { color: white; font-weight: 700; }
+    .db-footer-actions { display: flex; gap: 10px; }
+    .db-footer-btn {
+      border-radius: 6px; padding: 6px 14px; font-size: 11px; font-weight: 600; cursor: pointer; border: none;
+    }
+    .db-footer-btn.outline { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+    .db-footer-btn.filled { background: var(--purple); color: white; }
 
-        .pricing-card h3 {
-            font-size: 24px;
-            margin-bottom: 10px;
-            color: #333;
-        }
+    /* ─── PRICING ─── */
+    .billing-toggle { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 52px; }
+    .toggle-lbl { font-size: 14px; color: var(--muted); font-weight: 500; }
+    .toggle-switch { width: 46px; height: 24px; background: rgba(255,255,255,.1); border: 1px solid var(--border); border-radius: 100px; position: relative; cursor: pointer; transition: background .3s; }
+    .toggle-switch.on { background: var(--purple); border-color: var(--purple); }
+    .toggle-knob { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: white; border-radius: 50%; transition: transform .25s ease; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+    .toggle-switch.on .toggle-knob { transform: translateX(22px); }
+    .save-pill { background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.25); color: #10b981; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 100px; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
+    .price-card { background: var(--surface); border: 1px solid var(--border); border-radius: 22px; padding: 36px 30px; position: relative; transition: all .3s; }
+    .price-card:hover { border-color: rgba(124,58,237,.25); transform: translateY(-4px); box-shadow: 0 24px 64px rgba(0,0,0,.4); }
+    .price-card.featured { background: linear-gradient(150deg, rgba(124,58,237,.14) 0%, rgba(124,58,237,.04) 100%); border-color: rgba(124,58,237,.35); transform: scale(1.04); }
+    .price-card.featured:hover { transform: scale(1.04) translateY(-4px); }
+    .price-popular { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--purple), var(--pink)); color: white; font-size: 11px; font-weight: 700; padding: 4px 16px; border-radius: 100px; white-space: nowrap; }
+    .price-tier { font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .price-amount { font-size: 56px; font-weight: 900; letter-spacing: -2.5px; line-height: 1; margin-bottom: 4px; display: flex; align-items: flex-start; gap: 2px; }
+    .price-amount sup { font-size: 22px; font-weight: 700; margin-top: 10px; }
+    .price-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+    .price-divider { height: 1px; background: var(--border); margin-bottom: 26px; }
+    .price-features { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
+    .price-features li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; color: var(--muted); }
+    .price-features li .ck { color: #10b981; font-size: 14px; flex-shrink: 0; line-height: 1.4; }
+    .btn-tier { width: 100%; padding: 13px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; text-decoration: none; display: block; text-align: center; }
+    .btn-tier-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-tier-outline:hover { border-color: var(--purple-light); color: var(--purple-light); }
+    .btn-tier-fill { background: linear-gradient(135deg, var(--purple), #5b21b6); border: 1px solid transparent; color: white; box-shadow: 0 6px 20px rgba(124,58,237,.3); }
+    .btn-tier-fill:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(124,58,237,.5); }
 
-        .price {
-            font-size: 48px;
-            color: #667eea;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
+    /* ─── FAQ ─── */
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .faq-q { padding: 22px 24px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; transition: color .2s; }
+    .faq-q:hover { color: var(--purple-light); }
+    .faq-arrow { font-size: 18px; transition: transform .3s; flex-shrink: 0; color: var(--muted); }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); color: var(--purple-light); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s ease; padding: 0 24px; font-size: 14px; color: var(--muted); line-height: 1.75; }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 22px; }
 
-        .price span {
-            font-size: 18px;
-            color: #999;
-        }
+    /* ─── CTA BANNER ─── */
+    .cta-banner {
+      margin: 0 80px 80px;
+      background: linear-gradient(135deg, rgba(124,58,237,.15) 0%, rgba(236,72,153,.08) 100%);
+      border: 1px solid rgba(124,58,237,.25); border-radius: 28px;
+      padding: 72px 80px; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-banner::before { content: ''; position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(124,58,237,.15) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+    .cta-banner h2 { font-size: 50px; font-weight: 900; letter-spacing: -2px; margin-bottom: 16px; position: relative; z-index: 1; }
+    .cta-banner p { font-size: 17px; color: var(--muted); margin-bottom: 40px; position: relative; z-index: 1; }
+    .cta-btn-row { display: flex; gap: 14px; justify-content: center; position: relative; z-index: 1; }
 
-        .pricing-features {
-            text-align: left;
-            margin-bottom: 30px;
-            color: #666;
-            font-size: 14px;
-            line-height: 2;
-        }
+    /* ─── FOOTER ─── */
+    footer { border-top: 1px solid var(--border); padding: 40px 80px; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo { font-size: 20px; font-weight: 900; background: linear-gradient(135deg, #fff 0%, var(--purple-light) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -.5px; }
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 13px; transition: color .2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 13px; color: var(--muted); }
 
-        .pricing-features li {
-            list-style: none;
-            margin-bottom: 10px;
-        }
+    /* ─── SCROLL REVEAL ─── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
-        .pricing-features li:before {
-            content: "✓ ";
-            color: #667eea;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-
-        .faq {
-            background: #f8f9fa;
-        }
-
-        .faq h2 {
-            font-size: 36px;
-            margin-bottom: 60px;
-            text-align: center;
-            color: #333;
-        }
-
-        .faq-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-        }
-
-        .faq-item h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-
-        .faq-item p {
-            color: #666;
-            line-height: 1.8;
-        }
-
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-            font-size: 14px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-content p {
-            margin-bottom: 10px;
-        }
-
-        .footer-contact {
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .hero p {
-                font-size: 18px;
-            }
-
-            .nav {
-                gap: 15px;
-                font-size: 12px;
-            }
-
-            section {
-                padding: 60px 20px;
-            }
-
-            .benefits h2, .pricing h2, .faq h2 {
-                font-size: 28px;
-            }
-
-            .pricing-card.featured {
-                transform: scale(1);
-            }
-        }
-    </style>
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; } .nav-links { display: none; }
+      .hero { padding: 90px 24px 48px; } .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      h1 { font-size: 40px; letter-spacing: -1.5px; } .hero-visual { height: 420px; }
+      .section { padding: 64px 24px; } .section-heading { font-size: 32px; }
+      .steps-grid, .features-grid, .pricing-grid, .db-clips-grid { grid-template-columns: 1fr; }
+      .price-card.featured { transform: none; }
+      .cta-banner { margin: 0 24px 48px; padding: 48px 24px; } .cta-banner h2 { font-size: 32px; }
+      footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 24px; }
+      .float-card { display: none; }
+      .logos-bar { padding: 40px 24px; }
+      .scroll-anim-section { padding: 64px 24px; }
+      .db-clips-grid { grid-template-columns: repeat(3,1fr); }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo">SnapReel</div>
-            <nav class="nav">
-                <a href="#benefits">Benefits</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#faq">FAQ</a>
-                <a href="mailto:FahadA@snapreel.site">Contact</a>
-            </nav>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div class="nav-logo">SnapReel</div>
+  <ul class="nav-links">
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="mailto:FahadA@snapreel.site?subject=SnapReel - Login Request" class="btn-ghost">Log in</a>
+    <a href="#pricing" class="btn-primary">Get Started →</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg-radial"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-inner">
+    <!-- Left -->
+    <div>
+      <h1>Turn Long Videos Into <span class="gradient-text">Viral Clips</span> Instantly</h1>
+      <p class="hero-desc">Upload your coaching session, podcast, or webinar — our AI finds the best moments, adds punchy captions, and delivers ready-to-post short-form clips in minutes.</p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn-primary btn-large">Start Creating Clips →</a>
+        <a href="mailto:FahadA@snapreel.site?subject=Sample Clip Request" class="btn-ghost btn-large">See a Sample Clip</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-val">50+</div><div class="stat-lbl">Clips per video</div></div>
+        <div><div class="stat-val">2 min</div><div class="stat-lbl">Avg. turnaround</div></div>
+        <div><div class="stat-val">9:16</div><div class="stat-lbl">Post-ready format</div></div>
+      </div>
+    </div>
+
+    <!-- Right: iPhone + floating cards -->
+    <div class="hero-visual">
+
+      <div class="float-card fc-1">
+        <div class="fc-icon purple">✂️</div>
+        <div><div class="fc-title">12 clips generated</div><div class="fc-sub">From 45 min podcast</div></div>
+      </div>
+      <div class="float-card fc-2">
+        <div class="fc-icon green">🔥</div>
+        <div><div class="fc-title">2.4M views</div><div class="fc-sub">This week's clips</div></div>
+      </div>
+      <div class="float-card fc-3">
+        <div class="fc-icon orange">⚡</div>
+        <div><div class="fc-title">Posted daily</div><div class="fc-sub">0 hours editing</div></div>
+      </div>
+
+      <!-- iPhone -->
+      <div class="iphone-wrap">
+        <div class="iphone">
+          <div class="phone-island"></div>
+          <div class="phone-power"></div>
+          <div class="phone-vol-up"></div>
+          <div class="phone-vol-dn"></div>
+
+          <div class="phone-screen">
+            <iframe
+              src="https://www.youtube.com/embed/hqdJCMOCHm4?autoplay=1&mute=1&loop=1&playlist=hqdJCMOCHm4&controls=0&rel=0&modestbranding=1"
+              style="position:absolute;inset:0;width:100%;height:100%;border:none;border-radius:40px;"
+              allow="autoplay; fullscreen"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
-    </header>
+      </div>
 
-    <section class="hero">
-        <h1>Your Coaching Content. Posted Daily. Done For You.</h1>
-        <p>We turn your existing coaching videos into 40 viral-ready short clips every month — so you stay visible on TikTok, Reels, and Shorts without spending an extra hour on content.</p>
-        <a href="mailto:FahadA@snapreel.site?subject=Free%20Sample%20Clip" class="cta-button">Get Your Free Sample Clip</a>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section class="benefits" id="benefits">
-        <h2>Why SnapReel</h2>
-        <div class="benefits-grid">
-            <div class="benefit-card">
-                <h3>Never Waste Content Again</h3>
-                <p>Every coaching call, webinar, or podcast becomes daily content that attracts new clients on autopilot. Stop sitting on hours of unused recordings.</p>
+<!-- ═══ LOGOS BAR ═══ -->
+<div class="logos-bar">
+  <div class="logos-inner">
+    <div class="logos-label">Clips delivered for creators on</div>
+    <div class="logos-row">
+      <span class="logo-item">TikTok</span>
+      <span class="logo-item">Instagram</span>
+      <span class="logo-item">YouTube</span>
+      <span class="logo-item">LinkedIn</span>
+      <span class="logo-item">Twitter / X</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="section" id="how">
+  <div class="section-inner">
+    <div class="section-eyebrow">Process</div>
+    <h2 class="section-heading">How SnapReel Works</h2>
+    <p class="section-subheading">From raw long-form video to dozens of polished viral clips — automatically.</p>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-icon-wrap">📁</div>
+        <div class="step-title">Upload Your Video</div>
+        <p class="step-desc">Sign in with Google, Apple, Facebook, or email. Upload any coaching session, podcast, webinar, or YouTube video — any length, any format.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:.12s">
+        <div class="step-num">02</div>
+        <div class="step-icon-wrap">🤖</div>
+        <div class="step-title">AI Finds the Gold</div>
+        <p class="step-desc">Our AI scans the entire video, identifies the highest-impact moments, writes animated captions, and auto-formats everything to 9:16 vertical for all platforms.</p>
+      </div>
+      <div class="step reveal" style="transition-delay:.24s">
+        <div class="step-num">03</div>
+        <div class="step-icon-wrap">🚀</div>
+        <div class="step-title">Download & Post</div>
+        <p class="step-desc">Your polished clips appear in your dashboard. Download them in one click and post to TikTok, Instagram Reels, YouTube Shorts, and LinkedIn — daily.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="section" id="features">
+  <div class="section-inner">
+    <div class="section-eyebrow">Features</div>
+    <h2 class="section-heading">Everything Coaches Need</h2>
+    <p class="section-subheading">Built for busy business coaches who want more content with zero editing time.</p>
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon">✂️</div>
+        <div class="feat-title">Auto-Clip Detection</div>
+        <p class="feat-desc">AI identifies your most compelling, share-worthy moments and auto-generates clips — no manual scrubbing through hours of footage.</p>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.1s">
+        <div class="feat-icon">💬</div>
+        <div class="feat-title">Animated Captions</div>
+        <p class="feat-desc">95%+ accurate auto-captions with bold, animated word-by-word highlighting. Keep viewers watching till the very end.</p>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.2s">
+        <div class="feat-icon">📱</div>
+        <div class="feat-title">9:16 Auto-Format</div>
+        <p class="feat-desc">Every clip is perfectly cropped and formatted for TikTok, Instagram Reels, and YouTube Shorts. No manual resizing ever.</p>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.3s">
+        <div class="feat-icon">🎯</div>
+        <div class="feat-title">Virality Score</div>
+        <p class="feat-desc">Each clip receives an AI virality score so you always know which clips to post first for maximum reach and engagement.</p>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.4s">
+        <div class="feat-icon">🎨</div>
+        <div class="feat-title">Custom Branding</div>
+        <p class="feat-desc">Add your logo, choose brand colors and fonts. Every clip reflects your brand identity consistently across all platforms.</p>
+      </div>
+      <div class="feat-card reveal" style="transition-delay:.5s">
+        <div class="feat-icon">⚡</div>
+        <div class="feat-title">Minutes, Not Days</div>
+        <p class="feat-desc">Upload in the morning, download polished clips by afternoon. Never run out of content or miss a posting day again.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCROLL ANIMATION — DASHBOARD MOCKUP ═══ -->
+<section class="section scroll-anim-section" id="demo">
+  <div class="section-inner">
+    <div class="section-eyebrow">Dashboard</div>
+    <h2 class="section-heading">Your Clips. Ready to Download.</h2>
+    <p class="section-subheading">A clean dashboard shows every clip the moment it's ready — with virality scores, captions previews, and one-click downloads.</p>
+
+    <div class="scroll-container-wrapper">
+      <div class="scroll-3d-container" id="scroll3d">
+        <div class="db-mockup">
+
+          <!-- Header -->
+          <div class="db-header">
+            <div class="db-logo-text">SnapReel</div>
+            <div class="db-header-right">
+              <div class="db-stat-pill">✓ 12 clips ready</div>
+              <button class="db-btn">Download All ↓</button>
             </div>
-            <div class="benefit-card">
-                <h3>Platform-Ready in 48 Hours</h3>
-                <p>Captions, subtitles, and vertical formatting done for TikTok, Reels, and Shorts. No editing apps, no learning curves — just done.</p>
+          </div>
+
+          <!-- Source video row -->
+          <div class="db-video-row">
+            <div class="db-source-thumb">🎙️</div>
+            <div class="db-source-info">
+              <div class="db-source-name">Coaching Podcast — Ep. 47: How to Scale to $10K/mo</div>
+              <div class="db-source-meta">45:12 · Uploaded 3 mins ago · Processing complete</div>
             </div>
-            <div class="benefit-card">
-                <h3>$5 Per Clip. Fully Edited.</h3>
-                <p>40 clips a month for $199. Each one captioned, formatted, and ready to post. That's less than a cup of coffee per clip.</p>
+            <div>
+              <div class="db-source-bar"><div class="db-source-bar-fill"></div></div>
+              <div style="font-size:10px;color:#10b981;margin-top:4px;font-weight:700;">✓ Done</div>
             </div>
+          </div>
+
+          <div class="db-clips-label">Generated Clips (12)</div>
+
+          <!-- Clips grid -->
+          <div class="db-clips-grid">
+            <div class="db-clip" style="--c1:#1a0a2e;--c2:#0a0a1f">
+              <div class="db-clip-thumb"><div class="db-clip-score">🔥 <span class="score-num">98</span></div></div>
+              <div class="db-clip-play">▶</div>
+              <div class="db-clip-dur">0:42</div>
+            </div>
+            <div class="db-clip" style="--c1:#0a1f1a;--c2:#041510">
+              <div class="db-clip-thumb"><div class="db-clip-score">⭐ <span class="score-num">94</span></div></div>
+              <div class="db-clip-play">▶</div>
+              <div class="db-clip-dur">0:58</div>
+            </div>
+            <div class="db-clip" style="--c1:#1f0a15;--c2:#0f0810">
+              <div class="db-clip-thumb"><div class="db-clip-score">🔥 <span class="score-num">91</span></div></div>
+              <div class="db-clip-play">▶</div>
+              <div class="db-clip-dur">1:02</div>
+            </div>
+            <div class="db-clip" style="--c1:#1a1205;--c2:#100d02">
+              <div class="db-clip-thumb"><div class="db-clip-score">⭐ <span class="score-num">87</span></div></div>
+              <div class="db-clip-play">▶</div>
+              <div class="db-clip-dur">0:35</div>
+            </div>
+            <div class="db-clip" style="--c1:#081a20;--c2:#040f14">
+              <div class="db-clip-thumb"><div class="db-clip-score">⭐ <span class="score-num">83</span></div></div>
+              <div class="db-clip-play">▶</div>
+              <div class="db-clip-dur">0:51</div>
+            </div>
+            <div class="db-clip" style="--c1:#1a0a0a;--c2:#100505">
+              <div class="db-clip-thumb"><div class="db-clip-score">⚡ <span class="score-num">79</span></div></div>
+              <div class="db-clip-play">▶</div>
+              <div class="db-clip-dur">0:47</div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="db-footer">
+            <div class="db-footer-stat"><span>12</span> clips · <span>45 min</span> source · <span>4.2 GB</span> total</div>
+            <div class="db-footer-actions">
+              <button class="db-footer-btn outline">Preview All</button>
+              <button class="db-footer-btn filled">Download ZIP ↓</button>
+            </div>
+          </div>
+
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="pricing" id="pricing">
-        <h2>Simple Monthly Plans</h2>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>Starter</h3>
-                <div class="price">$99<span>/mo</span></div>
-                <ul class="pricing-features">
-                    <li>20 clips/month</li>
-                    <li>Instagram Reels only</li>
-                    <li>72-hour turnaround</li>
-                    <li>1 revision round</li>
-                </ul>
-                <a href="mailto:FahadA@snapreel.site?subject=Starter%20Plan" class="cta-button">Get Started</a>
-            </div>
+<!-- ═══ PRICING ═══ -->
+<section class="section" id="pricing">
+  <div class="section-inner">
+    <div class="section-eyebrow">Pricing</div>
+    <h2 class="section-heading">Simple, Transparent Pricing</h2>
+    <p class="section-subheading">No contracts. Cancel anytime. Choose the plan that matches your content volume.</p>
 
-            <div class="pricing-card featured">
-                <h3>Growth</h3>
-                <div class="price">$199<span>/mo</span></div>
-                <ul class="pricing-features">
-                    <li>40 clips/month</li>
-                    <li>TikTok + Reels + Shorts</li>
-                    <li>48-hour turnaround</li>
-                    <li>2 revision rounds</li>
-                </ul>
-                <a href="mailto:FahadA@snapreel.site?subject=Growth%20Plan" class="cta-button">Most Popular</a>
-            </div>
+    <div class="billing-toggle">
+      <span class="toggle-lbl">Monthly</span>
+      <div class="toggle-switch" id="billingToggle" onclick="toggleBilling()"><div class="toggle-knob"></div></div>
+      <span class="toggle-lbl">Annual &nbsp;<span class="save-pill">Save 20%</span></span>
+    </div>
 
-            <div class="pricing-card">
-                <h3>Authority</h3>
-                <div class="price">$349<span>/mo</span></div>
-                <ul class="pricing-features">
-                    <li>80 clips/month</li>
-                    <li>All platforms + LinkedIn</li>
-                    <li>24-hour turnaround</li>
-                    <li>Performance report</li>
-                </ul>
-                <a href="mailto:FahadA@snapreel.site?subject=Authority%20Plan" class="cta-button">Go Big</a>
-            </div>
-        </div>
-    </section>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-amount"><sup>$</sup><span class="pv" data-m="99" data-a="79">99</span></div>
+        <div class="price-period">per month</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="ck">✓</span> 20 clips per month</li>
+          <li><span class="ck">✓</span> Auto-captions</li>
+          <li><span class="ck">✓</span> 9:16 auto-format</li>
+          <li><span class="ck">✓</span> 5 video uploads/month</li>
+          <li><span class="ck">✓</span> Email support</li>
+        </ul>
+        <a href="mailto:FahadA@snapreel.site?subject=Starter Plan - $99/mo" class="btn-tier btn-tier-outline">Get Started</a>
+      </div>
 
-    <section class="faq" id="faq">
-        <h2>Questions Answered</h2>
-        <div class="faq-grid">
-            <div class="faq-item">
-                <h3>Do I have to record anything new?</h3>
-                <p>No. You send us your existing coaching calls, YouTube videos, or webinar recordings. We clip, caption, and format everything. Zero extra work on your end.</p>
-            </div>
-            <div class="faq-item">
-                <h3>How do you know which moments to clip?</h3>
-                <p>We use AI to identify your strongest hooks, most actionable advice, and highest-energy moments. Every clip is reviewed by a human before delivery.</p>
-            </div>
-            <div class="faq-item">
-                <h3>What if I don't like the clips?</h3>
-                <p>Your first batch includes unlimited revisions. After that, two revision rounds per delivery. Most clients approve 90%+ on the first pass.</p>
-            </div>
-        </div>
-    </section>
+      <div class="price-card featured">
+        <div class="price-popular">⭐ Most Popular</div>
+        <div class="price-tier" style="color:var(--purple-light)">Growth</div>
+        <div class="price-amount"><sup>$</sup><span class="pv" data-m="199" data-a="159">199</span></div>
+        <div class="price-period">per month</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="ck">✓</span> 40 clips per month</li>
+          <li><span class="ck">✓</span> Auto-captions + highlights</li>
+          <li><span class="ck">✓</span> Custom branding & logo</li>
+          <li><span class="ck">✓</span> 15 video uploads/month</li>
+          <li><span class="ck">✓</span> Virality score per clip</li>
+          <li><span class="ck">✓</span> Priority support</li>
+        </ul>
+        <a href="mailto:FahadA@snapreel.site?subject=Growth Plan - $199/mo" class="btn-tier btn-tier-fill">Get Started</a>
+      </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-contact">
-                <p><strong>SnapReel</strong></p>
-                <p>FahadA@snapreel.site</p>
-            </div>
-            <p>&copy; 2026 SnapReel. All rights reserved.</p>
-        </div>
-    </footer>
+      <div class="price-card">
+        <div class="price-tier">Scale</div>
+        <div class="price-amount"><sup>$</sup><span class="pv" data-m="349" data-a="279">349</span></div>
+        <div class="price-period">per month</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="ck">✓</span> 80 clips per month</li>
+          <li><span class="ck">✓</span> Everything in Growth</li>
+          <li><span class="ck">✓</span> Unlimited video uploads</li>
+          <li><span class="ck">✓</span> Multi-platform scheduling</li>
+          <li><span class="ck">✓</span> Dedicated account manager</li>
+          <li><span class="ck">✓</span> API access</li>
+        </ul>
+        <a href="mailto:FahadA@snapreel.site?subject=Scale Plan - $349/mo" class="btn-tier btn-tier-outline">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
+<!-- ═══ FAQ ═══ -->
+<section class="section" id="faq">
+  <div class="section-inner">
+    <div class="section-eyebrow">FAQ</div>
+    <h2 class="section-heading">Common Questions</h2>
+    <p class="section-subheading">Everything you need to know before getting started.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What types of video can I upload? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Any long-form video works — coaching sessions, podcasts, webinars, YouTube videos, Zoom recordings, or interviews. We support MP4, MOV, and most common formats up to 2 hours in length.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How long does it take to get my clips? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Most videos are processed and your clips are ready within 2–5 minutes. Longer videos (1 hour+) may take up to 10 minutes. You'll get a notification when they're ready to download.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can I customise the captions and branding? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Yes! On Growth and Scale plans you can add your logo, choose caption font and colors, and apply brand presets. You can also manually edit captions before downloading if needed.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Which platforms are the clips optimised for? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">All clips are exported in 9:16 vertical format at 1080×1920 resolution — perfect for TikTok, Instagram Reels, YouTube Shorts, LinkedIn, and Twitter/X video.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can I cancel at any time? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">Absolutely. There are no long-term contracts. Cancel your subscription any time from your account settings — you'll keep access until the end of your billing period.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How do I pay? <span class="faq-arrow">+</span></div>
+        <div class="faq-a">We accept all major credit and debit cards (Visa, Mastercard, Amex) via Stripe, as well as Apple Pay and Google Pay. Email us to get started and we'll send a secure payment link.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA BANNER ═══ -->
+<div class="cta-banner reveal">
+  <h2>Ready to Go <span class="gradient-text">Viral?</span></h2>
+  <p>Join coaches who are growing their audience and authority with SnapReel — zero editing required.</p>
+  <div class="cta-btn-row">
+    <a href="#pricing" class="btn-primary btn-large">Start Creating Clips →</a>
+    <a href="mailto:FahadA@snapreel.site?subject=SnapReel - I have a question" class="btn-ghost btn-large">Talk to Us</a>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-logo">SnapReel</div>
+  <ul class="footer-links">
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="mailto:FahadA@snapreel.site">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 SnapReel. All rights reserved.</div>
+</footer>
+
+<script>
+  // Billing toggle
+  let isAnnual = false;
+  function toggleBilling() {
+    isAnnual = !isAnnual;
+    document.getElementById('billingToggle').classList.toggle('on', isAnnual);
+    document.querySelectorAll('.pv').forEach(el => { el.textContent = isAnnual ? el.dataset.a : el.dataset.m; });
+  }
+
+  // FAQ accordion
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Scroll reveal — fires early (300px before viewport entry)
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+  }, { threshold: 0, rootMargin: '0px 0px 300px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Fallback: reveal everything after 1.5s in case observer doesn't fire
+  setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')), 1500);
+
+  // Rotating phone captions
+  const captions = [
+    'The <span class="hl">secret</span> to 10x revenue...',
+    'Why <span class="hl">99%</span> of coaches never scale...',
+    'This one mindset <span class="hl">shift</span> changed everything',
+    'How I went from $0 to <span class="hl">$10K/mo</span>',
+    'Stop <span class="hl">overdelivering</span>. Start charging more.',
+  ];
+  let captionIdx = 0;
+  setInterval(() => {
+    captionIdx = (captionIdx + 1) % captions.length;
+    const el = document.getElementById('captionText');
+    el.style.opacity = '0';
+    setTimeout(() => { el.innerHTML = captions[captionIdx]; el.style.opacity = '1'; }, 300);
+  }, 3000);
+  document.getElementById('captionText').style.transition = 'opacity 0.3s';
+
+  // 3D scroll animation for dashboard
+  const dashSection = document.getElementById('demo');
+  const dash3d = document.getElementById('scroll3d');
+  function updateDashTilt() {
+    const rect = dashSection.getBoundingClientRect();
+    const winH = window.innerHeight;
+    const progress = Math.max(0, Math.min(1, 1 - (rect.top - winH * 0.1) / (winH * 0.8)));
+    const rotateX = 28 * (1 - progress);
+    const scale = 0.88 + 0.12 * progress;
+    dash3d.style.transform = `rotateX(${rotateX}deg) scale(${scale})`;
+  }
+  window.addEventListener('scroll', updateDashTilt, { passive: true });
+  updateDashTilt();
+</script>
+
 </body>
 </html>
