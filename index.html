@@ -351,9 +351,9 @@
       display: flex; align-items: center; gap: 12px;
       box-shadow: 0 16px 48px rgba(80,40,160,0.12); white-space: nowrap;
     }
-    .float-card.fc-1 { top: 8%; left: -30%; animation: fc1 5s ease-in-out infinite; }
-    .float-card.fc-2 { bottom: 14%; right: -28%; animation: fc2 6s ease-in-out infinite; }
-    .float-card.fc-3 { top: 52%; left: -36%; animation: fc1 4.5s ease-in-out infinite reverse; }
+    .float-card.fc-1 { top: 4%; left: 4%; animation: fc1 5s ease-in-out infinite; }
+    .float-card.fc-2 { bottom: 10%; right: 4%; animation: fc2 6s ease-in-out infinite; }
+    .float-card.fc-3 { top: 50%; left: 2%; animation: fc1 4.5s ease-in-out infinite reverse; }
     @keyframes fc1 { 0%,100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-10px) rotate(-1.5deg); } }
     @keyframes fc2 { 0%,100% { transform: translateY(0) rotate(1.5deg); } 50% { transform: translateY(-12px) rotate(1.5deg); } }
     .fc-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
@@ -591,9 +591,61 @@
       .scroll-anim-section { padding: 64px 24px; }
       .db-clips-grid { grid-template-columns: repeat(3,1fr); }
     }
+    /* ─── SAMPLE MODAL ─── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(10,5,25,0.65); backdrop-filter: blur(8px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #fff; border-radius: 24px; padding: 32px;
+      width: 90%; max-width: 440px; position: relative;
+      box-shadow: 0 40px 100px rgba(80,40,160,0.25);
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 20px;
+      background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted);
+      line-height: 1;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--purple-light); margin-bottom: 10px;
+    }
+    .modal-title { font-size: 20px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+    .modal-video {
+      width: 100%; aspect-ratio: 9/16; border-radius: 16px; overflow: hidden;
+      background: #000; max-height: 420px;
+    }
+    .modal-video iframe { width: 100%; height: 100%; border: none; }
+    .modal-cta { margin-top: 18px; text-align: center; }
+    .modal-cta a {
+      display: inline-block; background: #16102a; color: white;
+      padding: 12px 28px; border-radius: 10px; font-size: 14px; font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 0 0 1px rgba(109,40,217,0.4), 0 4px 20px rgba(109,40,217,0.25);
+    }
   </style>
 </head>
 <body>
+
+<!-- Sample Clip Modal -->
+<div class="modal-overlay" id="sampleModal" onclick="if(event.target===this)closeSampleModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeSampleModal()">×</button>
+    <div class="modal-label">Sample Output</div>
+    <div class="modal-title">Real clip from a coaching session</div>
+    <div class="modal-sub">This is the kind of clip SnapReel produces — ready to post in minutes.</div>
+    <div class="modal-video">
+      <iframe id="sampleIframe" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+    <div class="modal-cta">
+      <a href="trial.html">Get Your Own Clips Free →</a>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ NAV ═══ -->
 <nav>
@@ -621,8 +673,8 @@
       <h1>Turn Long Videos Into <span class="gradient-text">Viral Clips</span> Instantly</h1>
       <p class="hero-desc">Upload your coaching session, podcast, or webinar — we find the best moments, add punchy captions, and deliver ready-to-post short-form clips in minutes.</p>
       <div class="hero-actions">
-        <a href="#pricing" class="btn-primary btn-large">Start Creating Clips →</a>
-        <a href="mailto:FahadA@snapreel.site?subject=Sample Clip Request" class="btn-ghost btn-large">See a Sample Clip</a>
+        <a href="trial.html" class="btn-primary btn-large">Try It Free →</a>
+        <button onclick="openSampleModal()" class="btn-ghost btn-large">See a Sample Clip</button>
       </div>
       <div class="hero-stats">
         <div><div class="stat-val">50+</div><div class="stat-lbl">Clips per video</div></div>
@@ -864,7 +916,7 @@
           <li><span class="ck">✓</span> 5 video uploads/month</li>
           <li><span class="ck">✓</span> Email support</li>
         </ul>
-        <a href="mailto:FahadA@snapreel.site?subject=Starter Plan - $99/mo" class="btn-tier btn-tier-outline">Get Started</a>
+        <a href="payment.html?plan=starter" class="btn-tier btn-tier-outline">Get Started</a>
       </div>
 
       <div class="price-card featured">
@@ -881,7 +933,7 @@
           <li><span class="ck">✓</span> Virality score per clip</li>
           <li><span class="ck">✓</span> Priority support</li>
         </ul>
-        <a href="mailto:FahadA@snapreel.site?subject=Growth Plan - $199/mo" class="btn-tier btn-tier-fill">Get Started</a>
+        <a href="payment.html?plan=growth" class="btn-tier btn-tier-fill">Get Started</a>
       </div>
 
       <div class="price-card">
@@ -897,7 +949,7 @@
           <li><span class="ck">✓</span> Dedicated account manager</li>
           <li><span class="ck">✓</span> API access</li>
         </ul>
-        <a href="mailto:FahadA@snapreel.site?subject=Scale Plan - $349/mo" class="btn-tier btn-tier-outline">Get Started</a>
+        <a href="payment.html?plan=scale" class="btn-tier btn-tier-outline">Get Started</a>
       </div>
     </div>
   </div>
@@ -943,7 +995,7 @@
   <h2>Ready to Go <span class="gradient-text">Viral?</span></h2>
   <p>Join coaches who are growing their audience and authority with SnapReel — zero editing required.</p>
   <div class="cta-btn-row">
-    <a href="#pricing" class="btn-primary btn-large">Start Creating Clips →</a>
+    <a href="trial.html" class="btn-primary btn-large">Try It Free →</a>
     <a href="mailto:FahadA@snapreel.site?subject=SnapReel - I have a question" class="btn-ghost btn-large">Talk to Us</a>
   </div>
 </div>
@@ -1016,6 +1068,19 @@
   }
   window.addEventListener('scroll', updateDashTilt, { passive: true });
   updateDashTilt();
+
+  function openSampleModal() {
+    document.getElementById('sampleIframe').src =
+      'https://www.youtube.com/embed/hqdJCMOCHm4?autoplay=1&rel=0&modestbranding=1';
+    document.getElementById('sampleModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSampleModal() {
+    document.getElementById('sampleIframe').src = '';
+    document.getElementById('sampleModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSampleModal(); });
 </script>
 
 </body>
